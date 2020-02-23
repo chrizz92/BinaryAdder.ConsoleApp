@@ -6,7 +6,7 @@ namespace BinaryAdder
     {
 
         /// <summary>
-        /// Asks for an Input-String and checks if it is a binary number or not, when not a new number is prompted
+        /// Asks for an Input-String and checks if it is a binary number or not, when not a new number is prompted. If the string is empty the inputNumber will be zero.
         /// </summary>
         /// <param name="counter">Number of input</param>
         /// <returns>The Input-String</returns>
@@ -32,7 +32,43 @@ namespace BinaryAdder
                 }
             } while (!isNumber);
 
+            if (inputNumber == "")
+            {
+                inputNumber = "0";
+            }
+
             return inputNumber;
+        }
+
+        /// <summary>
+        /// Takes a binary number as string an builds a new string with the number divided into blocks of four digits
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns>The divided number</returns>        
+        public static string AddDividingSpacesToBinaryNumber(string number)
+        {
+            string newNumber = "";
+            int index = number.Length - 1;
+            int counter = 0;
+            while (index >= 0)
+            {
+                if (counter % 4 == 0)
+                {
+                    newNumber = " " + newNumber;
+                }
+
+                if(number[index] == '1')
+                {
+                    newNumber = "1" + newNumber;
+                }
+                else
+                {
+                    newNumber = "0" + newNumber;
+                } 
+                counter++;
+                index--;
+            }
+            return newNumber;
         }
 
         /// <summary>
@@ -128,7 +164,7 @@ namespace BinaryAdder
         }
 
         /// <summary>
-        /// Takes a string as a potential binary number and tries to make 32-bit-integer out of it. If the string is not a binary number the function returns zero.
+        /// Takes a string as a potentially binary number and tries to make 32-bit-integer out of it. If the string is not a binary number the function returns zero.
         /// </summary>
         /// <param name="binaryNumber"></param>
         /// <returns>The integer value of the given binary number</returns>
@@ -160,9 +196,6 @@ namespace BinaryAdder
             return result;
         }
 
-
-
-
         static void Main(string[] args)
         {
             Console.WriteLine("Binäraddierer");
@@ -171,8 +204,9 @@ namespace BinaryAdder
             string binaryNumberOne = ReadBinaryNumber(1);
             string binaryNumberTwo = ReadBinaryNumber(2);
             string binaryNumberResult = AddBigBinaries(binaryNumberOne, binaryNumberTwo);
+            Console.WriteLine();
             Console.WriteLine("Addition im Binärsystem:");
-            Console.WriteLine("{0} + {1} = {2}",binaryNumberOne,binaryNumberTwo,binaryNumberResult);
+            Console.WriteLine("{0} + {1} = {2}",AddDividingSpacesToBinaryNumber(binaryNumberOne),AddDividingSpacesToBinaryNumber(binaryNumberTwo),AddDividingSpacesToBinaryNumber(binaryNumberResult));
             Console.WriteLine();
             Console.WriteLine("Addition im Dezimalsystem:");
             Console.WriteLine("{0} + {1} = {2}", ConvertBinaryNumberToInt32(binaryNumberOne), ConvertBinaryNumberToInt32(binaryNumberTwo), ConvertBinaryNumberToInt32(binaryNumberResult));
